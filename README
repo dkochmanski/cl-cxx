@@ -1,0 +1,10 @@
+CL-CXX
+======
+
+This is a C++ library that interfaces to any Common Lisp implementation,
+where "any" right now means basically ECL.
+
+The core of this library is based on ideas from boost::python, though
+written from scratch, with a little less template magic and looping and
+ensuring that the backend remains portable enough to be adapted to any
+Common Lisp implementation.
