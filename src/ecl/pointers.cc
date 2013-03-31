@@ -17,15 +17,17 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifndef CL_CXX_BASE_H
-#define CL_CXX_BASE_H
+#include <ecl/ecl.h>
+#include <cl-cxx/backend/ecl.hpp>
 
-#include <cl-cxx/backend.hpp>
+namespace cl_cxx_backend {
 
-namespace cl_cxx {
+  /************************************************************
+   * FROM LISP TO C++
+   */
 
-  typedef cl_cxx_backend::cl_object cl_object;
+  cl_object make_foreign_data(void *p) {
+    ecl_make_foreign_data(ECL_NIL, 0, p);
+  }
 
 } // namespace cl_cxx
-
-#endif // CL_CXX_BASE_H

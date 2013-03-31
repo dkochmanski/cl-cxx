@@ -2,7 +2,7 @@ dnl -*- Autoconf -*-
 dnl ----------------------------------------------------------------------
 dnl Find the Google Test library
 dnl
-AC_DEFUN([TENSOR_GTEST],[
+AC_DEFUN([CL_CXX_GTEST],[
 here=`pwd`
 GTEST_URL=http://googletest.googlecode.com/files/gtest-1.6.0.zip
 GTEST_NAME=`basename $GTEST_URL .zip`
@@ -68,3 +68,8 @@ AM_CONDITIONAL([HAVE_GTEST], [test "x${GTEST_DIR}" != x])
 AC_SUBST(GTEST_DIR)
 ])
 
+dnl ----------------------------------------------------------------------
+dnl Find out the system directory and headers for ECL
+AC_DEFUN([CL_CXX_ECL],[
+dnl Nothing right now: we trust the user to supply it
+])

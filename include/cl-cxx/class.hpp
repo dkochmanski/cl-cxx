@@ -17,15 +17,21 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifndef CL_CXX_BASE_H
-#define CL_CXX_BASE_H
+#ifndef CL_CXX_CLASS_H
+#define CL_CXX_CLASS_H
 
-#include <cl-cxx/backend.hpp>
+#include <cl-cxx/base.hpp>
 
 namespace cl_cxx {
 
-  typedef cl_cxx_backend::cl_object cl_object;
+  template<class A>
+  class class_ {
+    class_(const A &a);
+
+    cl_object to_cl_object(const A &a);
+    const A from_cl_object(cl_object o);
+  };
 
 } // namespace cl_cxx
 
-#endif // CL_CXX_BASE_H
+#endif // CL_CXX_CLASS_H

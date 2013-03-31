@@ -17,15 +17,20 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifndef CL_CXX_BASE_H
-#define CL_CXX_BASE_H
+#include <cstring>
+#include <ecl/ecl.h>
+#include <ecl/ecl-inl.h>
+#include <cl-cxx/backend/ecl.hpp>
 
-#include <cl-cxx/backend.hpp>
+namespace cl_cxx_backend {
 
-namespace cl_cxx {
+  cl_object symbol(const char *package, const char *name) {
+    cl_object p = ecl_find_package(package);
+    return _ecl_intern(name, p);
+  }
 
-  typedef cl_cxx_backend::cl_object cl_object;
+  cl_object symbol(const char *name) {
+    return symbol("CL", name);
+  }
 
-} // namespace cl_cxx
-
-#endif // CL_CXX_BASE_H
+} // namespace cl_cxx_backend

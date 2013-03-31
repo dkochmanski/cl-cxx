@@ -13,7 +13,7 @@ AC_CONFIG_SRCDIR([./README])		dnl Unique file where sources are
 AC_CONFIG_MACRO_DIR([m4])		dnl Additional macro directories
 AC_CONFIG_AUX_DIR([config_aux])		dnl Where to put autoconf files
 AC_CONFIG_HEADERS([config_aux/config.h])	dnl Automatically generated
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile include/Makefile src/Makefile])
 
 #
 # Initialize Automake, minimal version 1.9, with options to make it less
@@ -28,7 +28,10 @@ AC_LANG([C++])
 AC_PROG_LIBTOOL
 
 # Unit testing with google
-TENSOR_GTEST
+CL_CXX_GTEST
+
+# Find out where ECL lives
+CL_CXX_FIND_ECL
 
 # Doxygen support
 
