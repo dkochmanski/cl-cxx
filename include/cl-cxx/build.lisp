@@ -1,6 +1,6 @@
 (defun wrapper (arg-list)
   (format t "
-#include <cl-cxx/backend.hpp>
+#include <cl-cxx/base.hpp>
 #include <cl-cxx/object.hpp>
 
 namespace cl_cxx {
@@ -12,7 +12,7 @@ using namespace cl_cxx_backend;
      do (format t "
 template<class Ret~{, class T~A~}>
 inline cl_object wrap(Ret F(~:*~{T~A a~:*~A~^, ~}), cl_arglist a) {
-  return to_cl_object(F(~:*~{from_cl_object<A~A>(nth_arg(a, ~:*~A))~^, 
+  return to_cl_object(F(~:*~{from_cl_object<T~A>(nth_arg(a, ~:*~A))~^, 
                         ~}));
 }
 "

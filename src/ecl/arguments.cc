@@ -22,9 +22,12 @@
 #include <ecl/internal.h>
 #include <cl-cxx/backend/ecl.hpp>
 
-namespace ecl_cxx_backend {
+namespace cl_cxx_backend {
 
   const cl_object (*funcall)(::cl_narg narg, cl_object ...) = cl_funcall;
+
+  const cl_object nil = ECL_NIL;
+  const cl_object t = ECL_T;
 
   cl_object nth_arg(cl_object arglist, int i)
   {
@@ -32,38 +35,41 @@ namespace ecl_cxx_backend {
       std::cerr << "Missing argument #" << i << " in a CL-CXX wrapped function.\n";
       abort();
     }
-    return ((cl_object*)arglist->frame.base)[i];
+    return ((cl_object*)arglist->frame.base)[i-1];
   }
 
   static
   cl_object callback_function(cl_narg narg, ...)
   {
-    cl_env_ptr the_env = ecl_process_env();
-    cl_object closure = the_env->function;
-    cl_object closure_env = closure->cclosure.env;
-    cl_object output;
     {
-      typedef cl_object (*callback_t)(cl_object);
-      callback_t f = (callback_t)closure_env;
+    cl_env_ptr the_env = ecl_process_env();
+    cl_object output;
+    ECL_STACK_FRAME_VARARGS_BEGIN(narg, narg, frame);
+    {
+      cl_object closure = the_env->function;
+      cl_object closure_env = closure->cclosure.env;
       {
-	ECL_STACK_FRAME_VARARGS_BEGIN(narg, narg, frame);
-	output = f(frame);
-	ECL_STACK_FRAME_VARARGS_END(frame);
+        cl_object env = closure_env;
+        callback_t wrapper = (callback_t)ECL_CONS_CAR(closure_env);
+        void *f = (void*)ECL_CONS_CDR(closure_env);
+	output = wrapper(f, frame);
       }
     }
+    ECL_STACK_FRAME_VARARGS_END(frame);
     ecl_return1(the_env, output);
+    }
   }
 
-  void define_function(const char *name, cl_object (*callback)(cl_object arglist))
+  void define_function(cl_object symbol, callback_t callback, void *f)
   {
-    cl_object f = ecl_make_cclosure_va(callback_function, (cl_object)callback, ECL_NIL);
-    cl_object symbol = ecl_read_from_cstring_safe(name, ECL_NIL);
-    if (symbol == ECL_NIL) {
-      std::cerr << "Syntax error when defining a Lisp function. String \""
-		<< name << "\" does not name a valid Lisp symbol.\n";
-      abort();
-    }
-    si_fset(2, symbol, f);
+    cl_object env = ecl_cons((cl_object)callback, (cl_object)f);
+    cl_object fn = ecl_make_cclosure_va(callback_function, env, ECL_NIL);
+    si_fset(2, symbol, fn);
+  }
+
+  void define_function(const char *name, callback_t callback, void *f)
+  {
+    define_function(symbol(name), callback, f);
   }
 
 } // namespace ecl_cxx_backend

@@ -28,14 +28,20 @@ namespace cl_cxx_backend {
 
   typedef cl_object cl_arglist;
 
+  extern const cl_object nil;
+  extern const cl_object t;
+
   /** Extract the nth-argument from the call we just constructed. */
   cl_object nth_arg(cl_arglist arglist, int n);
 
   /** Return a Common Lisp object that wraps around a pointer. */
   cl_object make_foreign_data(void *p);
 
+  typedef cl_object (*callback_t)(void *f, cl_arglist);
+
   /** Define a Common Lisp function that invokes the corresponding callback. */
-  void define_function(const char *name, cl_object (*callback)(cl_object arglist));
+  void define_function(cl_object symbol, callback_t callback, void *f);
+  void define_function(const char *symbol_name, callback_t callback, void *f);
 
   /** Call a Common Lisp function with a variable number of arguments. */
   extern const cl_object (*funcall)(::cl_narg narg, cl_object ...);
@@ -45,6 +51,10 @@ namespace cl_cxx_backend {
 
   /** Find a symbol in the CL package. */
   cl_object symbol(const char *name);
+
+  /** Eval a string expression. */
+  cl_object eval_string(const char *string, cl_object error_value);
+  cl_object eval_string(const char *string);
 
 } // namespace cl_cxx_backend
 

@@ -14,5 +14,6 @@ libcl_cxx_la_SOURCES = \
 	ecl/numbers.cc \
 	ecl/pointers.cc \
 	ecl/strings.cc \
-	ecl/symbols.cc
+	ecl/symbols.cc \
+	ecl/eval.cc
 

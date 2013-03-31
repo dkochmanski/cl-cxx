@@ -17,26 +17,35 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include <cstring>
-#include <iostream>
 #include <ecl/ecl.h>
-#include <ecl/ecl-inl.h>
-#include <cl-cxx/backend/ecl.hpp>
+#include <cl-cxx/base.hpp>
+#include <cl-cxx/wrapper.hpp>
 
-namespace cl_cxx_backend {
+#ifndef CL_CXX_DEFUN_H
+#define CL_CXX_DEFUN_H
 
-  cl_object symbol(const char *package, const char *name) {
-    cl_object p = ecl_find_package(package);
-    return _ecl_intern(name, p);
+namespace cl_cxx {
+
+  template<class F>
+  inline void defun(cl_object symbol, F f) {
+    struct Foo {
+      static cl_object callback(void *f, cl_arglist arglist) {
+	return wrap((F)f, arglist);
+      }
+    };
+    define_function(symbol, Foo::callback, (void*)f);
   }
 
-  cl_object symbol(const char *name) {
-    cl_object output = ecl_read_from_cstring_safe(name, ECL_NIL);
-    if (output == ECL_NIL || type_of(output) != t_symbol) {
-      std::cerr << "Then string \"" << name << "\" does not name a "
-        "valid Common Lisp symbol.\n";
-      abort();
-    }
+  template<class F>
+  inline void defun(const char *symbol_name, F f) {
+    struct Foo {
+      static cl_object callback(void *f, cl_arglist arglist) {
+	return wrap((F)f, arglist);
+      }
+    };
+    define_function(symbol_name, Foo::callback, (void*)f);
   }
 
-} // namespace cl_cxx_backend
+}
+
+#endif // CL_CXX_DEFUN_H

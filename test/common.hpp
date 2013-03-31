@@ -17,26 +17,18 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include <cstring>
-#include <iostream>
-#include <ecl/ecl.h>
-#include <ecl/ecl-inl.h>
-#include <cl-cxx/backend/ecl.hpp>
+#include <cl-cxx/base.hpp>
 
-namespace cl_cxx_backend {
+namespace cl_cxx_test {
 
-  cl_object symbol(const char *package, const char *name) {
-    cl_object p = ecl_find_package(package);
-    return _ecl_intern(name, p);
-  }
-
-  cl_object symbol(const char *name) {
-    cl_object output = ecl_read_from_cstring_safe(name, ECL_NIL);
-    if (output == ECL_NIL || type_of(output) != t_symbol) {
-      std::cerr << "Then string \"" << name << "\" does not name a "
-        "valid Common Lisp symbol.\n";
-      abort();
+#ifdef ECL_ECL_H
+  static class Boot {
+  public:
+    Boot(int aux) {
+      char *argc[] = { "./foo" } ;
+      cl_boot(1, argc);
     }
-  }
+  } foo(0);
+#endif
 
-} // namespace cl_cxx_backend
+};

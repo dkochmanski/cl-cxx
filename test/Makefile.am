@@ -5,7 +5,7 @@ AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/include -I$(top_srcdir)/src \
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
-GTEST_LDFLAGS = libgtest_main.a $(LDFLAGS) -lpthread
+GTEST_LDFLAGS = libgtest_main.a $(LDFLAGS) -lecl -lpthread
 
 #
 # No rules here yet
@@ -21,10 +21,10 @@ AM_TESTS_FD_REDIRECT = --gtest_death_test_style=threadsafe
 #
 
 if HAVE_GTEST
-#TESTS += test_refcount
-#check_PROGRAMS += test_refcount
-#test_refcount_SOURCES = test_refcount.cc
-#test_refcount_LDADD = libtestmain.a ../src/libtensor.la $(GTEST_LDFLAGS) #-lstdc++
+TESTS += test_defun
+check_PROGRAMS += test_defun
+test_defun_SOURCES = test_defun.cc
+test_defun_LDADD = ../src/libcl_cxx.la $(GTEST_LDFLAGS) #-lstdc++
 endif
 
 ######################################################################
