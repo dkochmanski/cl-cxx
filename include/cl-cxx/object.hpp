@@ -39,6 +39,7 @@ namespace cl_cxx {
   }
 
   template<> extern cl_object to_cl_object(int i);
+  template<> extern cl_object to_cl_object(unsigned int i);
   template<> extern cl_object to_cl_object(long i);
   template<> extern cl_object to_cl_object(unsigned long i);
   template<> extern cl_object to_cl_object(float i);
@@ -52,6 +53,7 @@ namespace cl_cxx {
   }
 
   template<> extern int from_cl_object<int>(cl_object o);
+  template<> extern unsigned int from_cl_object<unsigned int>(cl_object o);
   template<> extern long from_cl_object<long>(cl_object o);
   template<> extern unsigned long from_cl_object<unsigned long>(cl_object o);
   template<> extern float from_cl_object<float>(cl_object o);
