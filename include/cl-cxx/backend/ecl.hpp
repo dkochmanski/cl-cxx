@@ -56,6 +56,31 @@ namespace cl_cxx_backend {
   cl_object eval_string(const char *string, cl_object error_value);
   cl_object eval_string(const char *string);
 
+  /** Object to use for returning multiple values. */
+  struct return_stack {
+    /** The type of value that a C function must return. */
+    typedef cl_object value;
+    /** The creator with no values. */
+    return_stack() : env(ecl_process_env()) {
+      env->nvalues = 0;
+      env->values[0] = ECL_NIL;
+    }
+    /** A function to add one value at a time. */
+    return_stack &operator<<(cl_object o) {
+      env->values[env->nvalues++] = o;
+      return *this;
+    }
+    /** A function to finally return all the values that were grouped. */
+    value return_value() {
+      return env->values[0];
+    }
+  private:
+    /* Copy constructors are hidden and forbidden. */
+    return_stack(const return_stack &s);
+    const return_stack &operator=(const return_stack &s);
+    const cl_env_ptr env;
+  };
+
 } // namespace cl_cxx_backend
 
 #endif // CL_CXX_BACKEND_ECL_H

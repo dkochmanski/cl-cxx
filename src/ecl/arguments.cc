@@ -56,7 +56,7 @@ namespace cl_cxx_backend {
       }
     }
     ECL_STACK_FRAME_VARARGS_END(frame);
-    ecl_return1(the_env, output);
+    return output;
     }
   }
 

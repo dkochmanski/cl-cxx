@@ -13,7 +13,9 @@ using namespace cl_cxx_backend;
 template<class Ret~{, class T~A~}>
 inline cl_object wrap(Ret F(~:*~{T~A a~:*~A~^, ~}), cl_arglist a) {~:*~{
   argument_wrapper<T~A> b~:*~A(nth_arg(a, ~:*~A));~}
-  return to_cl_object(F(~:*~{b~A.value~^, ~}));
+  cl_cxx_backend::return_stack s;
+  s << to_cl_object(F(~:*~{b~A.value~^, ~}));
+  return (s~:*~{ << b~A~}).return_value();
 }
 "
 		l))
