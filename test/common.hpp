@@ -21,6 +21,8 @@
 
 namespace cl_cxx_test {
 
+#define ASSERT_T(exp) ASSERT_EQ(t,exp)
+
 #ifdef ECL_ECL_H
   static class Boot {
   public:

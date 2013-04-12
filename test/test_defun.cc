@@ -38,14 +38,16 @@ namespace cl_cxx_test {
   }
 
   int f_int_int_ref(int &i) {
-    return 1+i;
+    int output = i + 1;
+    i = i + 2;
+    return output;
   }
 
   TEST(Defun, DefunIntRef1) {
     defun("FOO", f_int_int_ref);
-    ASSERT_EQ(1, from_cl_object<int>(eval_string("(FOO 0)")));
-    ASSERT_EQ(0, from_cl_object<int>(eval_string("(FOO -1)")));
-    ASSERT_EQ(2, from_cl_object<int>(eval_string("(FOO 1)")));
+    ASSERT_T(eval_string("(EQUAL (print (MULTIPLE-VALUE-LIST (FOO 0))) '(1 2))"));
+    ASSERT_T(eval_string("(EQUAL (MULTIPLE-VALUE-LIST (FOO 1)) '(2 3))"));
+    ASSERT_T(eval_string("(EQUAL (MULTIPLE-VALUE-LIST (FOO 2)) '(3 4))"));
   }
 
 } // cl_cxx_test
