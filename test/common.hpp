@@ -25,8 +25,8 @@ namespace cl_cxx_test {
   static class Boot {
   public:
     Boot(int aux) {
-      char *argc[] = { "./foo" } ;
-      cl_boot(1, argc);
+      const char *argc[] = { "./foo" } ;
+      cl_boot(1, (char **)argc);
     }
   } foo(0);
 #endif
