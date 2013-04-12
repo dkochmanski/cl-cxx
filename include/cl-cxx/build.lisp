@@ -1,7 +1,7 @@
 (defun wrapper (arg-list)
   (format t "
 #include <cl-cxx/base.hpp>
-#include <cl-cxx/object.hpp>
+#include <cl-cxx/argument.hpp>
 
 namespace cl_cxx {
 
@@ -11,9 +11,9 @@ using namespace cl_cxx_backend;
   (loop for l in arg-list
      do (format t "
 template<class Ret~{, class T~A~}>
-inline cl_object wrap(Ret F(~:*~{T~A a~:*~A~^, ~}), cl_arglist a) {
-  return to_cl_object(F(~:*~{from_cl_object<T~A>(nth_arg(a, ~:*~A))~^, 
-                        ~}));
+inline cl_object wrap(Ret F(~:*~{T~A a~:*~A~^, ~}), cl_arglist a) {~:*~{
+  argument_wrapper<T~A> b~:*~A(nth_arg(a, ~:*~A));~}
+  return to_cl_object(F(~:*~{b~A.value~^, ~}));
 }
 "
 		l))
@@ -55,7 +55,7 @@ inline cl_object wrap(Ret F(~:*~{T~A a~:*~A~^, ~}), cl_arglist a) {
 		  do (push i arg)))
       (format t "#endif // ~A~%" conditional))))
 
-(create-header "wrapper.hpp" #'wrapper)
+(create-header (merge-pathnames "wrapper.hpp" *load-truename*) #'wrapper)
 
 #+ecl
 (ext:quit)

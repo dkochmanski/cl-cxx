@@ -37,4 +37,15 @@ namespace cl_cxx_test {
     ASSERT_EQ(2, from_cl_object<int>(eval_string("(FOO 1)")));
   }
 
+  int f_int_int_ref(int &i) {
+    return 1+i;
+  }
+
+  TEST(Defun, DefunIntRef1) {
+    defun("FOO", f_int_int_ref);
+    ASSERT_EQ(1, from_cl_object<int>(eval_string("(FOO 0)")));
+    ASSERT_EQ(0, from_cl_object<int>(eval_string("(FOO -1)")));
+    ASSERT_EQ(2, from_cl_object<int>(eval_string("(FOO 1)")));
+  }
+
 } // cl_cxx_test

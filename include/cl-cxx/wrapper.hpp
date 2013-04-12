@@ -20,7 +20,7 @@
 #define CL_CXX_WRAPPER_H
 
 #include <cl-cxx/base.hpp>
-#include <cl-cxx/object.hpp>
+#include <cl-cxx/argument.hpp>
 
 namespace cl_cxx {
 
@@ -34,97 +34,107 @@ inline cl_object wrap(Ret F(), cl_arglist a) {
 
 template<class Ret, class T1>
 inline cl_object wrap(Ret F(T1 a1), cl_arglist a) {
-  return to_cl_object(F(from_cl_object<T1>(nth_arg(a, 1))));
+  argument_wrapper<T1> b1(nth_arg(a, 1));
+  return to_cl_object(F(b1.value));
 }
 
 template<class Ret, class T1, class T2>
 inline cl_object wrap(Ret F(T1 a1, T2 a2), cl_arglist a) {
-  return to_cl_object(F(from_cl_object<T1>(nth_arg(a, 1)), 
-                        from_cl_object<T2>(nth_arg(a, 2))));
+  argument_wrapper<T1> b1(nth_arg(a, 1));
+  argument_wrapper<T2> b2(nth_arg(a, 2));
+  return to_cl_object(F(b1.value, b2.value));
 }
 
 template<class Ret, class T1, class T2, class T3>
 inline cl_object wrap(Ret F(T1 a1, T2 a2, T3 a3), cl_arglist a) {
-  return to_cl_object(F(from_cl_object<T1>(nth_arg(a, 1)), 
-                        from_cl_object<T2>(nth_arg(a, 2)), 
-                        from_cl_object<T3>(nth_arg(a, 3))));
+  argument_wrapper<T1> b1(nth_arg(a, 1));
+  argument_wrapper<T2> b2(nth_arg(a, 2));
+  argument_wrapper<T3> b3(nth_arg(a, 3));
+  return to_cl_object(F(b1.value, b2.value, b3.value));
 }
 
 template<class Ret, class T1, class T2, class T3, class T4>
 inline cl_object wrap(Ret F(T1 a1, T2 a2, T3 a3, T4 a4), cl_arglist a) {
-  return to_cl_object(F(from_cl_object<T1>(nth_arg(a, 1)), 
-                        from_cl_object<T2>(nth_arg(a, 2)), 
-                        from_cl_object<T3>(nth_arg(a, 3)), 
-                        from_cl_object<T4>(nth_arg(a, 4))));
+  argument_wrapper<T1> b1(nth_arg(a, 1));
+  argument_wrapper<T2> b2(nth_arg(a, 2));
+  argument_wrapper<T3> b3(nth_arg(a, 3));
+  argument_wrapper<T4> b4(nth_arg(a, 4));
+  return to_cl_object(F(b1.value, b2.value, b3.value, b4.value));
 }
 
 template<class Ret, class T1, class T2, class T3, class T4, class T5>
 inline cl_object wrap(Ret F(T1 a1, T2 a2, T3 a3, T4 a4, T5 a5), cl_arglist a) {
-  return to_cl_object(F(from_cl_object<T1>(nth_arg(a, 1)), 
-                        from_cl_object<T2>(nth_arg(a, 2)), 
-                        from_cl_object<T3>(nth_arg(a, 3)), 
-                        from_cl_object<T4>(nth_arg(a, 4)), 
-                        from_cl_object<T5>(nth_arg(a, 5))));
+  argument_wrapper<T1> b1(nth_arg(a, 1));
+  argument_wrapper<T2> b2(nth_arg(a, 2));
+  argument_wrapper<T3> b3(nth_arg(a, 3));
+  argument_wrapper<T4> b4(nth_arg(a, 4));
+  argument_wrapper<T5> b5(nth_arg(a, 5));
+  return to_cl_object(F(b1.value, b2.value, b3.value, b4.value, b5.value));
 }
 
 template<class Ret, class T1, class T2, class T3, class T4, class T5, class T6>
 inline cl_object wrap(Ret F(T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6), cl_arglist a) {
-  return to_cl_object(F(from_cl_object<T1>(nth_arg(a, 1)), 
-                        from_cl_object<T2>(nth_arg(a, 2)), 
-                        from_cl_object<T3>(nth_arg(a, 3)), 
-                        from_cl_object<T4>(nth_arg(a, 4)), 
-                        from_cl_object<T5>(nth_arg(a, 5)), 
-                        from_cl_object<T6>(nth_arg(a, 6))));
+  argument_wrapper<T1> b1(nth_arg(a, 1));
+  argument_wrapper<T2> b2(nth_arg(a, 2));
+  argument_wrapper<T3> b3(nth_arg(a, 3));
+  argument_wrapper<T4> b4(nth_arg(a, 4));
+  argument_wrapper<T5> b5(nth_arg(a, 5));
+  argument_wrapper<T6> b6(nth_arg(a, 6));
+  return to_cl_object(F(b1.value, b2.value, b3.value, b4.value, b5.value, b6.value));
 }
 
 template<class Ret, class T1, class T2, class T3, class T4, class T5, class T6, class T7>
 inline cl_object wrap(Ret F(T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7), cl_arglist a) {
-  return to_cl_object(F(from_cl_object<T1>(nth_arg(a, 1)), 
-                        from_cl_object<T2>(nth_arg(a, 2)), 
-                        from_cl_object<T3>(nth_arg(a, 3)), 
-                        from_cl_object<T4>(nth_arg(a, 4)), 
-                        from_cl_object<T5>(nth_arg(a, 5)), 
-                        from_cl_object<T6>(nth_arg(a, 6)), 
-                        from_cl_object<T7>(nth_arg(a, 7))));
+  argument_wrapper<T1> b1(nth_arg(a, 1));
+  argument_wrapper<T2> b2(nth_arg(a, 2));
+  argument_wrapper<T3> b3(nth_arg(a, 3));
+  argument_wrapper<T4> b4(nth_arg(a, 4));
+  argument_wrapper<T5> b5(nth_arg(a, 5));
+  argument_wrapper<T6> b6(nth_arg(a, 6));
+  argument_wrapper<T7> b7(nth_arg(a, 7));
+  return to_cl_object(F(b1.value, b2.value, b3.value, b4.value, b5.value, b6.value, b7.value));
 }
 
 template<class Ret, class T1, class T2, class T3, class T4, class T5, class T6, class T7, class T8>
 inline cl_object wrap(Ret F(T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, T8 a8), cl_arglist a) {
-  return to_cl_object(F(from_cl_object<T1>(nth_arg(a, 1)), 
-                        from_cl_object<T2>(nth_arg(a, 2)), 
-                        from_cl_object<T3>(nth_arg(a, 3)), 
-                        from_cl_object<T4>(nth_arg(a, 4)), 
-                        from_cl_object<T5>(nth_arg(a, 5)), 
-                        from_cl_object<T6>(nth_arg(a, 6)), 
-                        from_cl_object<T7>(nth_arg(a, 7)), 
-                        from_cl_object<T8>(nth_arg(a, 8))));
+  argument_wrapper<T1> b1(nth_arg(a, 1));
+  argument_wrapper<T2> b2(nth_arg(a, 2));
+  argument_wrapper<T3> b3(nth_arg(a, 3));
+  argument_wrapper<T4> b4(nth_arg(a, 4));
+  argument_wrapper<T5> b5(nth_arg(a, 5));
+  argument_wrapper<T6> b6(nth_arg(a, 6));
+  argument_wrapper<T7> b7(nth_arg(a, 7));
+  argument_wrapper<T8> b8(nth_arg(a, 8));
+  return to_cl_object(F(b1.value, b2.value, b3.value, b4.value, b5.value, b6.value, b7.value, b8.value));
 }
 
 template<class Ret, class T1, class T2, class T3, class T4, class T5, class T6, class T7, class T8, class T9>
 inline cl_object wrap(Ret F(T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, T8 a8, T9 a9), cl_arglist a) {
-  return to_cl_object(F(from_cl_object<T1>(nth_arg(a, 1)), 
-                        from_cl_object<T2>(nth_arg(a, 2)), 
-                        from_cl_object<T3>(nth_arg(a, 3)), 
-                        from_cl_object<T4>(nth_arg(a, 4)), 
-                        from_cl_object<T5>(nth_arg(a, 5)), 
-                        from_cl_object<T6>(nth_arg(a, 6)), 
-                        from_cl_object<T7>(nth_arg(a, 7)), 
-                        from_cl_object<T8>(nth_arg(a, 8)), 
-                        from_cl_object<T9>(nth_arg(a, 9))));
+  argument_wrapper<T1> b1(nth_arg(a, 1));
+  argument_wrapper<T2> b2(nth_arg(a, 2));
+  argument_wrapper<T3> b3(nth_arg(a, 3));
+  argument_wrapper<T4> b4(nth_arg(a, 4));
+  argument_wrapper<T5> b5(nth_arg(a, 5));
+  argument_wrapper<T6> b6(nth_arg(a, 6));
+  argument_wrapper<T7> b7(nth_arg(a, 7));
+  argument_wrapper<T8> b8(nth_arg(a, 8));
+  argument_wrapper<T9> b9(nth_arg(a, 9));
+  return to_cl_object(F(b1.value, b2.value, b3.value, b4.value, b5.value, b6.value, b7.value, b8.value, b9.value));
 }
 
 template<class Ret, class T1, class T2, class T3, class T4, class T5, class T6, class T7, class T8, class T9, class T10>
 inline cl_object wrap(Ret F(T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, T8 a8, T9 a9, T10 a10), cl_arglist a) {
-  return to_cl_object(F(from_cl_object<T1>(nth_arg(a, 1)), 
-                        from_cl_object<T2>(nth_arg(a, 2)), 
-                        from_cl_object<T3>(nth_arg(a, 3)), 
-                        from_cl_object<T4>(nth_arg(a, 4)), 
-                        from_cl_object<T5>(nth_arg(a, 5)), 
-                        from_cl_object<T6>(nth_arg(a, 6)), 
-                        from_cl_object<T7>(nth_arg(a, 7)), 
-                        from_cl_object<T8>(nth_arg(a, 8)), 
-                        from_cl_object<T9>(nth_arg(a, 9)), 
-                        from_cl_object<T10>(nth_arg(a, 10))));
+  argument_wrapper<T1> b1(nth_arg(a, 1));
+  argument_wrapper<T2> b2(nth_arg(a, 2));
+  argument_wrapper<T3> b3(nth_arg(a, 3));
+  argument_wrapper<T4> b4(nth_arg(a, 4));
+  argument_wrapper<T5> b5(nth_arg(a, 5));
+  argument_wrapper<T6> b6(nth_arg(a, 6));
+  argument_wrapper<T7> b7(nth_arg(a, 7));
+  argument_wrapper<T8> b8(nth_arg(a, 8));
+  argument_wrapper<T9> b9(nth_arg(a, 9));
+  argument_wrapper<T10> b10(nth_arg(a, 10));
+  return to_cl_object(F(b1.value, b2.value, b3.value, b4.value, b5.value, b6.value, b7.value, b8.value, b9.value, b10.value));
 }
 
 } // namespace cl_cxx
